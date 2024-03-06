@@ -23,7 +23,15 @@ trap 'error ${LINENO}' ERR
 verbose=${verbose:=""}
 
 set +x
-[[ -f `dirname $0`/../_script-colors.sh ]] && . `dirname $0`/../_script-colors.sh # some beautification for messages
+[[ -f `dirname $0`/../_script-colors.sh ]] && . `dirname $0`/../_script-colors.sh # some decorations for messages
+# ... when no script-colors.sh found...
+COLORINFOBLOCK=${COLORCYAN:=''}
+COLORNONE=${COLORNONE:=''}
+COLORINFO=${COLORINFO:=''}
+COLORWARN=${COLORWARN:=''}
+COLORERROR=${COLORERROR:=''}
+COLORYELLOW=${COLORYELLOW:=''}
+
 #set -x
 
 for param in "$@"; do # special cases
@@ -43,8 +51,6 @@ if [[ $EUID -eq 0 ]]; then
     echo -e "${COLORERROR}Please do not run this script as root. Sudo used inside for safety.${COLORNONE}"
     exit 1
 fi
-
-COLORINFOBLOCK=${COLORCYAN}
 
 ARGS=("$@")
 EXECASUSER=${RUNASUSER:=$USER}
