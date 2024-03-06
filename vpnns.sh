@@ -141,6 +141,8 @@ or
    1. VPNNAME=yourvpncfg $BN --all-up
    2. VPNNAME=yourvpncfg $BN --exec cmd with params, e.g. ip route show
    3. VPNNAME=yourvpncfg $BN --all-down
+or
+   1. VPNNAME=yourvpncfg $BN --wrap cmd with params, e.g. ping -c 3 www.google.com
 "
 }
 

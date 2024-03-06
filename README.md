@@ -38,4 +38,6 @@ or
    1. VPNNAME=yourvpncfg vpnns.sh --all-up
    2. VPNNAME=yourvpncfg vpnns.sh --exec cmd with params, e.g. ip route show
    3. VPNNAME=yourvpncfg vpnns.sh --all-down
+or
+   1. VPNNAME=yourvpncfg vpnns.sh --wrap cmd with params, e.g. ping -c 3 www.google.com
 ```
