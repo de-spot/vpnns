@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Origin: https://github.com/de-spot/vpnns/blob/master/vpnns.sh
+#
 # Quick and dirty(?) Linux network namespace configuration to use with OpenVPN (as client).
 #
 # Tested only for Debian 12. Should work on Ubuntu 20+
