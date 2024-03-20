@@ -1,6 +1,15 @@
 # vpnns
 Linux network namespace configuration to use with OpenVPN client.
 
+Environment variables mentioned below can be set using file vpnns.conf.
+Search for vpnns.conf will be performed from current up to home directory.
+If not found then will be checked in ~/.config/.
+Example of vpnns.conf:
+```text
+VPNNAMS=yourvpncfg2
+```
+If VPNNAME is given as environment variable, vpnns.conf will not be searched.
+
 ```text
 Usage:
     vpnns.sh [ OPTIONS... ]

@@ -55,10 +55,61 @@ if [[ $EUID -eq 0 ]]; then
     exit 1
 fi
 
+VPNNAME=${VPNNAME:=""} # VPN Provider Name (config, etc)
+# Try to find configuration file vpnns.conf if VPNNAME is not set
+[[ $verbose ]] && echo "VPNNAME before config lookups: $VPNNAME"
+cfgfound=""
+findconfig(){
+    [[ $verbose ]] && echo -e "${COLORINFO}findconfig: now in directory: $1${COLORNONE}"
+    local fname="$1/vpnns.conf"
+    if [ -f "$fname" ]; then
+        [[ $verbose ]] && echo "findconfig: found vpnns.conf in $1 (full name: $fname)"
+        source "$fname"
+        cfgfound="yes"
+    fi
+}
+
+# Check per-directory configuration for VPNNAME if VPNNAME has not been set
+# Traverse from 'currentdir' to 'topmostdir' calling 'callback-function'
+# topmostdir MUST exists!
+#
+# Args: topmostdir currentdir callback-function
+uptodir(){
+    if [ -z "$1" -o -z "$2" -o -z "$3" ]; then
+        echo >&2 "uptodir() requires three arguments"
+        exit 1
+    fi
+    local TOPMOST=$1
+    local CURR="$2"
+    local CALLBACK="$3"
+    # Handle current dir
+    "$CALLBACK" "$CURR"
+    if [ "$cfgfound" = "yes" ]; then
+        return
+    fi
+    if [ "$CURR" == "$TOPMOST" ]; then
+        return
+    fi
+    local PARENT=`dirname "$CURR"`
+    uptodir "$TOPMOST" "$PARENT" "$CALLBACK"
+}
+if [ -z "${VPNNAME}" ]; then
+    [[ $verbose ]] && echo "Trying to find configuration file vpnns.conf up to home dir and in ~/.config..."
+    uptodir "$HOME" "$PWD" "findconfig"
+fi
+
+if [ -z "${VPNNAME}" -a -f "$HOME/.config/vpnns.conf" ]; then
+    [[ $verbose ]] && echo -e "${COLORINFO}found vpnns.conf in ${HOME}/.config/"
+    cat "$HOME/.config/vpnns.conf"
+    source "$HOME/.config/vpnns.conf"
+fi
+
+[[ $verbose ]] && echo "VPNNAME after config lookups: $VPNNAME"
+
 ARGS=("$@")
 EXECASUSER=${RUNASUSER:=$USER}
 VPNNS=${VPNNS:=""}    # Name of Network Name Space - use given or generate later
-VPNNAME=${VPNNAME:=vpnname-has-not-been-set} # VPN Provider Name (config, etc)
+VPNNAME=${VPNNAME:=vpnna8me-has-not-been-set} # VPN Provider Name (config, etc)
 ROUTE_MARKER=${ROUTE_MARKER:=""} # Will be generated if not given
 VPN0=VPN0ns
 VPN0IP=10.10.10.1
