@@ -162,29 +162,35 @@ error(){
 
 print_help() {
     local BN=`basename $0`
+    local bold=$(tput bold)
+    local norm=$(tput sgr0)
     echo -e "${COLORINFO}Usage:${COLORNONE}\n    $BN [ OPTIONS... ]
 \n${COLORINFO}Create and configure network namespace for isolated environment connected via OpenVPN to remote network.${COLORNONE}\n
   OPTIONS:
-    --debug         set -x to show all lines executed by bash after parameters were parsed
-    --verbose       show some additional information
-    --help          hmmmmm...
-    --ns-up         create network namespace with generated or provided name;
+    ${bold}--debug${norm}         set -x to show all lines executed by bash after parameters were parsed
+    ${bold}--verbose${norm}       show some additional information
+    ${bold}--help${norm}          hmmmmm...
+    ${bold}--ns-up${norm}         create network namespace with generated or provided name;
                     see notes below;
-    --ns-down       delete created network namespace;
+    ${bold}--ns-down${norm}       delete created network namespace;
                     also terminates all applications that uses this namespace (careful!)
-    --info          display information about namespace, if created
-    --ps            display processes running inside network namespace
-    --check         check how connection from within namespace and from host will look for external endpoints
-    --check-config  check if kernel configuration meets requirements then exit
-    --show-config   just show configuration
-    --vpn-up        start OpenVPN client in background
-    --vpn-down      terminates OpenVPN client
-    --all-up        combine --ns-up, --vpn-up
-    --all-down      combine --vpn-down --ns-down
-    --exec cmd ...  execute command with parameters within created namespace; should be last argument;
+    ${bold}--info${norm}          display information about namespace, if created
+    ${bold}--ps${norm}            display processes running inside network namespace
+    ${bold}--check${norm}         check how connection from within namespace and from host will look for external endpoints
+    ${bold}--check-config${norm}  check if kernel configuration meets requirements then exit
+    ${bold}--show-config${norm}   just show configuration
+    ${bold}--vpn-up${norm}        start OpenVPN client in background
+    ${bold}--vpn-down${norm}      terminates OpenVPN client
+    ${bold}--all-up${norm}        combine --ns-up, --vpn-up
+    ${bold}--all-down${norm}      combine --vpn-down --ns-down
+    ${bold}--exec cmd ...${norm}  execute command with parameters within created namespace; should be last argument;
                     will return exit code of 'cmd'
-    --wrap cmd ...  combine --all-up --exec cmd ... (wait for termination) --all-down;
+    ${bold}--wrap cmd ...${norm}  combine --all-up --exec cmd ... (wait for termination) --all-down;
                     will return exit code of 'cmd'
+    ${bold}up${norm}              alias for ${bold}--all-up${norm}
+    ${bold}down${norm}            alias for ${bold}--all-down${norm}
+    ${bold}exec${norm}            alias for ${bold}--exec${norm}
+    ${bold}wrap${norm}            alias for ${bold}--wrap${norm}
 
 ${COLORINFO}Notes${COLORNONE}
 VPN configuration expected to have name given via variable VPNNAME.
@@ -482,11 +488,11 @@ for i in "${!ARGS[@]}"; do
       --debug)
           unset 'ARGS[i]'
           ;;
-      --all-up)
+      --all-up|up)
           OP1=all-up
           unset 'ARGS[i]'
           ;;
-      --all-down)
+      --all-down|down)
           OP1=all-down
           unset 'ARGS[i]'
           ;;
@@ -526,11 +532,11 @@ for i in "${!ARGS[@]}"; do
           OP1=ps
           unset 'ARGS[i]'
           ;;
-      --exec)
+      --exec|exec)
           OP1=exec
           unset 'ARGS[i]'
           ;;
-      --wrap)
+      --wrap|wrap)
           OP1=wrap
           unset 'ARGS[i]'
           ;;

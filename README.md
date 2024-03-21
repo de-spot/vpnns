@@ -36,6 +36,11 @@ Create and configure network namespace for isolated environment connected via Op
                     will return exit code of 'cmd'
     --wrap cmd ...  combine --all-up --exec cmd ... (wait for termination) --all-down;
                     will return exit code of 'cmd'
+    up              alias for --all-up
+    down            alias for --all-down
+    exec            alias for --exec
+    wrap            alias for --wrap
+
 
 VPN configuration should have name "yourvpncfg.ovpn"; set it using variable VPNNAME.
 Configuration will be searched in "/home/username/openvpn" and then in "/etc/openvpn". Can be overridden by variable VPNCFGDIR
