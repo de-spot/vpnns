@@ -219,6 +219,10 @@ show_config() {
 
 check_config() {
     local cntFailures=0
+    if [[ ! -x /usr/sbin/openvpn ]]; then
+        echo -e "${COLORERROR}OpenVPN not found in path. Please install it 'sudo apt -y install openvpn'${COLORNONE}"
+	((cntFailures++))
+    fi
     if ! which socat &>/dev/null ; then
         echo -e "${COLORERROR}Unable to find socat. Please install it: 'sudo apt -y install socat'${COLORNONE}"
         ((cntFailures++))
