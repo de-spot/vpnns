@@ -111,13 +111,13 @@ EXECASUSER=${RUNASUSER:=$USER}
 VPNNS=${VPNNS:=""}    # Name of Network Name Space - use given or generate later
 VPNNAME=${VPNNAME:=vpnname-has-not-been-set} # VPN Provider Name (config, etc)
 ROUTE_MARKER=${ROUTE_MARKER:=""} # Will be generated if not given
-VPN0=VPN0ns
-VPN0IP=10.10.10.1
-VPN0NET=10.10.10.0/24
-VPN1=VPN1ns
-VPN1IP=10.10.10.2
-VPN1NET=10.10.10.0/24
-VPN1GW=10.10.10.254
+VPN0=${VPN0:="VPN0ns"}
+VPN0IP=${VPN0IP:="10.10.10.1"}
+VPN0NET=${VPN0NET:="10.10.10.0/24"}
+VPN1=${VPN1:="VPN1ns"}
+VPN1IP=${VPN1IP:="10.10.10.2"}
+VPN1NET=${VPN1NET:="10.10.10.0/24"}
+VPN1GW=${VPN1GW:="10.10.10.254"}
 SYSTEM_VPNCFGDIR="/etc/openvpn"
 USER_VPNCFGDIR="/home/$USER/openvpn"
 VPNCFGDIR=${VPNCFGDIR:=$USER_VPNCFGDIR}
@@ -254,7 +254,7 @@ check_config() {
         [[ $verbose ]] && echo -e "${COLORINFO}Remote VPN address/port: ${REMOTE_VPN_IP}/${REMOTE_VPN_PORT}${COLORNONE}"
         local isMarkerGenerated=0
         if [[ -z "${ROUTE_MARKER}" ]]; then
-            ROUTE_MARKER=$(echo "${REMOTE_VPN_IP}/${REMOTE_VPN_PORT}"|md5sum|head -c 8)
+            ROUTE_MARKER=$(echo "${REMOTE_VPN_IP}/${REMOTE_VPN_PORT}/${VPNNAME}/${VPN0IP}/${VPN0NET}/${VPN1IP}/${VPN1NET}"|md5sum|head -c 8)
             [[ $verbose ]] && echo -e "${COLORINFO}Mark value not given, generating... 0x${ROUTE_MARKER}${COLORNONE}"
             isMarkerGenerated=1
         else
@@ -400,7 +400,7 @@ ns_down() {
 }
 
 check() {
-    [[ $verbose ]] && echo "Existing netns\'es:"
+    [[ $verbose ]] && echo "Existing namespaces:"
     [[ $verbose ]] && sudo ip netns list
     # Check if we have OpenVPN inside network namespace
     [[ $verbose ]] && echo "Checking using namespace \"$VPNNS\" network:"
