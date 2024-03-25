@@ -109,7 +109,7 @@ fi
 ARGS=("$@")
 EXECASUSER=${RUNASUSER:=$USER}
 VPNNS=${VPNNS:=""}    # Name of Network Name Space - use given or generate later
-VPNNAME=${VPNNAME:=vpnna8me-has-not-been-set} # VPN Provider Name (config, etc)
+VPNNAME=${VPNNAME:=vpnname-has-not-been-set} # VPN Provider Name (config, etc)
 ROUTE_MARKER=${ROUTE_MARKER:=""} # Will be generated if not given
 VPN0=VPN0ns
 VPN0IP=10.10.10.1
