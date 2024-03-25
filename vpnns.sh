@@ -213,8 +213,13 @@ or
 }
 
 show_config() {
+    echo -e "${COLORINFO}Configuration name: ${COLORYELLOW}${VPNNAME}${COLORNONE}"
+    echo -e "${COLORINFO}Namespace         : ${COLORYELLOW}${VPNNS}${COLORNONE}"
     echo -e "${COLORINFO}External interface: ${COLORYELLOW}${EXTIF}${COLORNONE}"
     echo -e "${COLORINFO}VPN configuration : ${COLORYELLOW}${VPNCFGDIR}/${VPNCFG}${COLORNONE}"
+    echo -e "${COLORINFO}Endpoint 1        : ${COLORYELLOW}${VPN0}${COLORNONE} => ${COLORYELLOW}${VPN0IP}${COLORNONE} / ${COLORYELLOW}${VPN0NET}${COLORNONE}"
+    echo -e "${COLORINFO}Endpoint 2        : ${COLORYELLOW}${VPN1}${COLORNONE} => ${COLORYELLOW}${VPN1IP}${COLORNONE} / ${COLORYELLOW}${VPN1NET}${COLORNONE}"
+    echo -e "${COLORINFO}Route marker      : ${COLORYELLOW}${ROUTE_MARKER}${COLORNONE}"
 }
 
 check_config() {
