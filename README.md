@@ -8,7 +8,7 @@ Example of vpnns.conf:
 ```text
 VPNNAMS=yourvpncfg2
 ```
-If VPNNAME is not given as environment variable, vpnns.conf will not be searched.
+If VPNNAME is given as environment variable, vpnns.conf will not be searched.
 
 ```text
 Usage:
