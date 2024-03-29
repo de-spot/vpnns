@@ -6,7 +6,7 @@ Search for vpnns.conf will be performed from current up to home directory.
 If not found then will be checked in ~/.config/.
 Example of vpnns.conf:
 ```text
-VPNNAMS=yourvpncfg2
+VPNNAME=yourvpncfg2
 ```
 If VPNNAME is given as environment variable, vpnns.conf will not be searched.
 
