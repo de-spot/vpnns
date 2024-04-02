@@ -87,7 +87,7 @@ uptodir(){
     if [ "$cfgfound" = "yes" ]; then
         return
     fi
-    if [ "$CURR" == "$TOPMOST" ]; then
+    if [[ "$CURR" == "$TOPMOST" || "$CURR" == "/" ]]; then
         return
     fi
     local PARENT=`dirname "$CURR"`
